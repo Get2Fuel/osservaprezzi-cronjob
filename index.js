@@ -1,17 +1,21 @@
-import "dotenv/config";
+import path from path;
+import dotenv from "dotenv";
 import mongoose from "mongoose";
 import fetchRegionPumps from "./modules/fetchRegionPumps.js";
 import savePumps from "./modules/savePumps.js";
 import updatePumps from "./modules/updatePumps.js";
 import regions from "./utils/regions.js";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+dotenv.config({ path: __dirname + "/.env" });
 
 try {
   console.log(`Trying to connect to localhost...`);
-  await mongoose.connect(`mongodb://localhost:27017/osservaprezzi`, {
-    authSource: "admin",
-    user: process.env.USER,
-    pass: process.env.PW,
-  });
+  await mongoose.connect(
+    "mongodb://admin:Get2FuelDB@localhost:27017/osservaprezzi?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false"
+  );
   console.log("Connection succeded");
 } catch (error) {
   console.error("Connection failed");
